@@ -7,7 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Script Lottie sudah dihapus -->
+    <!-- ## SCRIPT BARU: Untuk Lottie Animation Player ## -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm"></script>
     <style>
         :root {
             --primary-color: #116ed1; 
@@ -137,9 +138,9 @@
     <main>
         <div class="card">
             <div class="loader-overlay" id="loaderOverlay">
-                <!-- ## HTML BARU: Menggunakan <img> untuk animasi GIF ## -->
-                <img src="/loading-truck.gif" alt="Loading..." style="width: 150px; height: 150px;">
-                <div class="loader-text">Memproses Transfer...</div>
+                <!-- ## PERBAIKAN: Menggunakan Lottie Animation Player ## -->
+                <canvas id="dotlottie-canvas" style="width: 250px; height: 250px;"></canvas>
+                <div class="loader-text">Otw Boss...</div>
             </div>
 
             <div class="header">
@@ -202,7 +203,9 @@
     </footer>
 
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <script>
+    <script type="module">
+        import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
+
         document.addEventListener('DOMContentLoaded', () => {
             async function handleApiResponse(response) {
                 if (response.status === 401) {
@@ -225,6 +228,7 @@
             const qrReaderEl = document.getElementById('qr-reader');
             const logoutBtn = document.getElementById('logoutBtn');
             let html5QrCode;
+            let dotLottie;
             
             let scannedHUs = [];
 
@@ -353,6 +357,17 @@
 
                 messageEl.style.display = 'none';
                 loaderOverlay.style.display = 'flex';
+                
+                if (!dotLottie) {
+                    dotLottie = new DotLottie({
+                        canvas: document.getElementById("dotlottie-canvas"),
+                        src: "https://lottie.host/79b7d6c7-1218-429d-9ff3-4ebf563e1c95/FCoH1GLOQc.lottie",
+                        loop: true,
+                        autoplay: true,
+                    });
+                } else {
+                    dotLottie.play();
+                }
 
                 const data = {
                     hus: scannedHUs,
@@ -385,6 +400,7 @@
                 } finally {
                     messageEl.style.display = 'block';
                     loaderOverlay.style.display = 'none';
+                    if (dotLottie) dotLottie.stop();
                 }
             });
 
