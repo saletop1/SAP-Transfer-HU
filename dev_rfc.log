@@ -1,0 +1,109 @@
+
+**** Log file opened at 2025-08-25 16:29:23.693788 UTC+07:00 (SE Asia Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 15
+Compilation date          : Nov  1 2024 23:51:57
+CPIC library              : 754.2024.07.29 version 3
+NI library                : 40
+Kernel Release            : 754 Patch Level 419
+Current working directory : D:\PROJECT1\laragon\laragon-8.2.3\www\Project1s\sap_transfer_hu
+Program                   : node
+Process ID                : 21348
+User                      : Satria Agung P
+Hardware                  : PC with Windows NT 12x AMD64 Level 6 (Mod 154 Step 3)
+Binary Type               : 64bit
+Operating_system          : Windows NT 10.0
+Hostname                  : SATRIA
+IP address                : 192.168.90.192
+IPv6 address              : fe80::e975:beec:bd2:b669
+Global trace level        : 0
+
+2025-08-25 16:29:23.694947 [08532] >> Info entry
+	Did not find config file D:\PROJECT1\laragon\laragon-8.2.3\www\Project1s\sap_transfer_hu\sapnwrfc.ini.
+
+**** Log file opened at 2025-08-25 16:45:36.655641 UTC+07:00 (SE Asia Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 15
+Compilation date          : Nov  1 2024 23:51:57
+CPIC library              : 754.2024.07.29 version 3
+NI library                : 40
+Kernel Release            : 754 Patch Level 419
+Current working directory : D:\PROJECT1\laragon\laragon-8.2.3\www\Project1s\sap_transfer_hu
+Program                   : node
+Process ID                : 02948
+User                      : Satria Agung P
+Hardware                  : PC with Windows NT 12x AMD64 Level 6 (Mod 154 Step 3)
+Binary Type               : 64bit
+Operating_system          : Windows NT 10.0
+Hostname                  : SATRIA
+IP address                : 192.168.90.192
+IPv6 address              : fe80::e975:beec:bd2:b669
+Global trace level        : 0
+
+2025-08-25 16:45:36.655474 [21360] >> Info entry
+	throwRfcErrorMsg called at:
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1B659B0: sapnwrfc.dll!RfcOpenConnection(Error in SymSetContext(): 50)
+	0x7FF915974A10: node.napi.node!napi_register_module_v1(Error in SymSetContext(): 50)
+	0x7FF915974A10: node.napi.node!napi_register_module_v1(Error in SymSetContext(): 50)
+	0x7FF7A3ACFDB0: node.exe!v8::CTypeInfoBuilder<double>::Build(Error in SymSetContext(): 50)
+	0x7FF7A3ACFDB0: node.exe!v8::CTypeInfoBuilder<double>::Build(Error in SymSetContext(): 50)
+	0x7FF7A49FB290: node.exe!uv_cancel(Error in SymSetContext(): 50)
+	0x7FF7A49E50F0: node.exe!uv_thread_detach(Error in SymSetContext(): 50)
+	0x7FF7A5839370: node.exe!v8::base::UnsignedDivisionByConstant<unsigned __int64>(Error in SymSetContext(): 50)
+	0x7FF95BCA2580: KERNEL32.DLL!BaseThreadInitThunk(Error in SymSetContext(): 50)
+	0x7FF95CCCAF10: ntdll.dll!RtlUserThreadStart(Error in SymSetContext(): 50)
+
+2025-08-25 16:45:36.765434 [21360] >> Error entry
+	[Handle: 2162032687664	ConvID: 77129508	Target: kmiprd	SysID: PRD	SysNr: 01	User: RFC_USER	Client: 300	Language: 	Codepage: 4103]
+	RfcLogonException: Key: RFC_LOGON_FAILURE, Code: RFC_LOGON_FAILURE, Message: Name or password is incorrect (repeat logon)
+
+**** Log file opened at 2025-08-26 17:58:16.391868 UTC+07:00 (SE Asia Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 15
+Compilation date          : Nov  1 2024 23:51:57
+CPIC library              : 754.2024.07.29 version 3
+NI library                : 40
+Kernel Release            : 754 Patch Level 419
+Current working directory : D:\PROJECT1\laragon\laragon-8.2.3\www\Project1s\sap_transfer_hu
+Program                   : node
+Process ID                : 21428
+User                      : Satria Agung P
+Hardware                  : PC with Windows NT 12x AMD64 Level 6 (Mod 154 Step 3)
+Binary Type               : 64bit
+Operating_system          : Windows NT 10.0
+Hostname                  : SATRIA
+IP address                : 192.168.90.192
+IPv6 address              : fe80::e975:beec:bd2:b669
+Global trace level        : 0
+
+2025-08-26 17:58:16.389266 [20580] >> Info entry
+	throwRfcErrorMsg called at:
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1BA96B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FF8E1B659B0: sapnwrfc.dll!RfcOpenConnection(Error in SymSetContext(): 50)
+	0x7FF926874A10: node.napi.node!napi_register_module_v1(Error in SymSetContext(): 50)
+	0x7FF926874A10: node.napi.node!napi_register_module_v1(Error in SymSetContext(): 50)
+	0x7FF61669FDB0: node.exe!v8::CTypeInfoBuilder<double>::Build(Error in SymSetContext(): 50)
+	0x7FF61669FDB0: node.exe!v8::CTypeInfoBuilder<double>::Build(Error in SymSetContext(): 50)
+	0x7FF6175CB290: node.exe!uv_cancel(Error in SymSetContext(): 50)
+	0x7FF6175B50F0: node.exe!uv_thread_detach(Error in SymSetContext(): 50)
+	0x7FF618409370: node.exe!v8::base::UnsignedDivisionByConstant<unsigned __int64>(Error in SymSetContext(): 50)
+	0x7FF95BCA2580: KERNEL32.DLL!BaseThreadInitThunk(Error in SymSetContext(): 50)
+	0x7FF95CCCAF10: ntdll.dll!RtlUserThreadStart(Error in SymSetContext(): 50)
+
+2025-08-26 17:58:16.508345 [20580] >> Error entry
+	[Handle: 2175233160128	ConvID: 67179697	Target: kmiprd	SysID: PRD	SysNr: 01	User: KMI-CT07	Client: 300	Language: 	Codepage: 4103]
+	RfcLogonException: Key: RFC_LOGON_FAILURE, Code: RFC_LOGON_FAILURE, Message: Name or password is incorrect (repeat logon)
