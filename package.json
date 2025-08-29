@@ -1,20 +1,17 @@
 {
-  "name": "sap_transfer_hu",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "@lottiefiles/dotlottie-web": "^0.50.1",
-    "express": "^5.1.0",
-    "express-session": "^1.18.2",
-    "html5-qrcode": "^2.3.8",
-    "node-rfc": "^3.3.1"
-  }
+    "$schema": "https://json.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.1.12",
+        "axios": "^1.11.0",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^2.0.0",
+        "tailwindcss": "^4.1.12",
+        "vite": "^7.0.4"
+    }
 }
