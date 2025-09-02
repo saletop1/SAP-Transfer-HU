@@ -1,22 +1,23 @@
+{{-- resources/views/index.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamat Datang - KMI SAP Transfer</title>
-    
-    {{-- Google Fonts --}}
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+
     <style>
+        /* ## PERUBAHAN: Palet warna diubah menjadi tema gelap (charcoal) ## */
         :root {
-            --primary-color: #116ed1;
-            --dark-blue: #0a4a9b;
-            --text-dark: #212529;
-            --text-secondary: #6c757d;
-            --background-light: #f8f9fa;
+            --primary-dark: #212529; /* Dark Charcoal */
+            --secondary-dark: #343a40;
+            --white: #d1d1d1ff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
         }
         * {
             margin: 0;
@@ -25,117 +26,119 @@
         }
         body {
             font-family: 'Poppins', sans-serif;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-        }
-        .split-screen {
-            display: flex;
-            width: 100%;
-            height: 100%;
-        }
-        .split-screen > div {
-            width: 50%;
-            height: 100%;
-        }
-        .left-pane {
-            /* ## PERBAIKAN: Menggunakan helper 'asset' Laravel untuk path gambar ## */
-            background-image: url("{{ asset('images/forklift-transporting.jpg') }}");
+            min-height: 100vh;
+            line-height: 1.7;
+            color: var(--white);
+
+            /* ## PERUBAHAN: Latar belakang gambar dengan overlay gelap, bukan ungu ## */
+            background-image: linear-gradient(45deg, rgba(33, 37, 41, 0.85), rgba(52, 58, 64, 0.85)), url("{{ asset('images/forklift-transporting.jpg') }}");
             background-size: cover;
             background-position: center;
-        }
-        .right-pane {
-            background-color: var(--background-light);
+
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 4rem;
-        }
-        .content-wrapper {
-            max-width: 450px;
+            padding: 2rem;
             text-align: center;
         }
-        .company-logo {
-            height: 60px;
-            margin-bottom: 2rem;
+
+        .main-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        .company-logo-header {
+            height: 70px;
+        }
+
+        .content-wrapper {
+            max-width: 600px;
+            width: 100%;
+        }
+
         h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
             margin-bottom: 1rem;
-            color: var(--text-dark);
+            color: var(--white);
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
         p {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 3vw, 1.15rem);
             margin-bottom: 3rem;
             color: var(--text-secondary);
-            line-height: 1.6;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .cta-button {
             display: inline-block;
-            padding: 14px 32px;
-            background-color: var(--primary-color);
-            color: white;
+            padding: 12px 35px;
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
             text-decoration: none;
             font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: background-color 0.3s, transform 0.2s;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-radius: 50px; /* Pill shape */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .cta-button:hover {
-            background-color: var(--dark-blue);
-            transform: translateY(-3px);
-        }
-        .footer {
-            font-size: 0.9rem;
-            color: #aaa;
+            background-color: var(--white);
+            /* ## PERUBAHAN: Warna teks saat hover disesuaikan dengan tema gelap ## */
+            color: var(--primary-dark);
         }
 
-        /* Responsif untuk layar kecil */
+        .footer {
+            position: absolute;
+            bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
         @media (max-width: 768px) {
-            .split-screen {
-                flex-direction: column;
-            }
-            .split-screen > div {
-                width: 100%;
-            }
-            .left-pane {
-                height: 40%;
-            }
-            .right-pane {
-                height: 60%;
-                justify-content: center;
-                padding: 2rem;
-            }
             h1 {
-                font-size: 2.2rem;
+                margin-bottom: 1.5rem;
+            }
+            p {
+                margin-bottom: 2.5rem;
+            }
+            .main-header {
+                padding: 1rem;
+                justify-content: center; /* Logo di tengah pada mobile */
             }
             .footer {
-                position: absolute;
-                bottom: 1rem;
-                color: var(--text-secondary);
+                position: relative; /* Footer mengalir normal di mobile */
+                margin-top: 4rem;
             }
         }
+
     </style>
 </head>
 <body>
-    <div class="split-screen">
-        <div class="left-pane"></div>
-        <div class="right-pane">
-            <div class="content-wrapper">
-                {{-- ## PERBAIKAN: Menggunakan helper 'asset' untuk path logo ## --}}
-                <img src="{{ asset('images/KMI.png') }}" alt="KMI Logo" class="company-logo">
-                <h1>HU Transfer System</h1>
-                <p>Aplikasi untuk mempermudah proses perpindahan Handling Unit antar Storage Location di SAP.</p>
-                {{-- ## PERBAIKAN: Menggunakan helper 'route' untuk link login ## --}}
-                <a href="{{ route('login.form') }}" class="cta-button">Mulai Sekarang →</a>
-            </div>
-            <footer class="footer">
-                {{-- ## PERBAIKAN: Membuat tahun menjadi dinamis ## --}}
-                © PT. Kayu Mebel Indonesia, {{ date('Y') }}
-            </footer>
-        </div>
+    <header class="main-header">
+        <img src="{{ asset('images/KMI.png') }}" alt="KMI Logo" class="company-logo-header">
+        <!-- Anda bisa menambahkan link navigasi di sini jika perlu -->
+    </header>
+
+    <div class="content-wrapper">
+        <h1>HU Transfer System</h1>
+        <p>Aplikasi untuk mempermudah proses perpindahan Handling Unit antar Storage Location di SAP.</p>
+        <a href="{{ route('login.form') }}" class="cta-button">Mulai Sekarang</a>
     </div>
+
+    <footer class="footer">
+        © PT. Kayu Mebel Indonesia, {{ date('Y') }}
+    </footer>
 </body>
 </html>
+
