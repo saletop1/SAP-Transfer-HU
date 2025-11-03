@@ -16,49 +16,61 @@ class TransferController extends Controller
 
     public function processTransfer(Request $request)
     {
-        // dd($request->all());
-        // 1. Validasi input dari form
+        // Validasi akan tetap berjalan seperti biasa
         $validated = $request->validate([
+            'hus'      => 'required|array|min:1',
+            'hus.*'    => 'string|distinct',
             'destSloc' => 'required|string',
-            'hus'      => 'required|array',  // <-- Diubah menjadi array
-            'hus.*'    => 'string',          // Opsional: memastikan setiap item di dalam array adalah string
         ]);
+        
+        $sapUsername = session('sap_username');
+        $sapPassword = session('sap_password');
 
-        // 2. Pastikan kredensial SAP ada di sesi Laravel
-        if (!session()->has('username') || !session()->has('password')) {
-            return back()->withErrors(['transfer' => 'Sesi SAP tidak ditemukan. Silakan login kembali.']);
+        if (!$sapUsername || !$sapPassword) {
+            // Redirect kembali dengan pesan error
+            return redirect()->route('transfer')
+                ->with('error', 'Sesi kredensial SAP tidak ditemukan. Silakan login kembali.');
         }
 
         try {
-            $payload = [
-                'hus' => $validated['hus'], // Langsung gunakan array dari hasil validasi
+            $apiUrl = 'http://192.168.90.27:5006/api/transfer';
+
+            $response = Http::timeout(30)->withHeaders([
+                'Accept' => 'application/json',
+                'X-SAP-Username' => $sapUsername,
+                'X-SAP-Password' => $sapPassword,
+            ])->post($apiUrl, [
+                'hus' => $validated['hus'],
                 'destSloc' => $validated['destSloc'],
-                'username' => session('username'),
-                'password' => session('password'),
-            ];
-            
-            // Alamat API Flask Anda (sebaiknya disimpan di file .env)
-            $flaskApiUrl = env('FLASK_SAP_API_URL', 'http://127.0.0.1:8080/api/transfer');
+            ]); 
+            $response->throw(); // Lempar exception jika status 4xx atau 5xx
 
-            // 4. Panggil API Flask menggunakan HTTP Client
-            $response = Http::timeout(60)->post($flaskApiUrl, $payload);
-
-            // 5. Proses respons dari Flask
-            if ($response->successful()) {
-                // Jika Flask mengembalikan status 2xx (sukses)
-                $data = $response->json();
-                return back()->with('success', $data['message'] ?? 'Proses transfer berhasil.');
-            } else {
-                // Jika Flask mengembalikan error (status 4xx atau 5xx)
-                $errorData = $response->json();
-                $errorMessage = $errorData['message'] ?? 'Terjadi kesalahan saat memproses transfer di SAP.';
-                return back()->withErrors(['transfer' => $errorMessage]);
-            }
+            // JIKA SUKSES: Redirect kembali dengan pesan sukses
+            $result = $response->json();
+            return redirect()->route('transfer')
+                ->with('success', $result['message'] ?? 'Semua HU berhasil ditransfer.');
 
         } catch (ConnectionException $e) {
-            // Jika koneksi ke Flask gagal total (misal: Flask mati)
-            Log::error('Gagal terhubung ke SAP Flask API: ' . $e->getMessage());
-            return back()->withErrors(['transfer' => 'Tidak dapat terhubung ke layanan SAP. Silakan coba lagi nanti.']);
+            Log::error('Gagal terhubung ke API Flask: ' . $e->getMessage());
+            return redirect()->route('transfer')
+                ->with('error', 'Tidak dapat terhubung ke server pemrosesan. Hubungi administrator.');
+
+        } catch (RequestException $e) {
+            Log::error('API Flask mengembalikan response error: ' . $e->getMessage());
+            $errorData = $e->response->json();
+            $errorMessage = $errorData['message'] ?? 'Terjadi kegagalan saat transfer.';
+            
+            // Kirim detail HU yang gagal jika ada
+            $failedHusDetails = $errorData['details']['failed_hus'] ?? null;
+
+            return redirect()->route('transfer')
+                ->with('error', $errorMessage)
+                ->with('failed_hus', $failedHusDetails);
+                
+        } catch (\Exception $e) {
+            Log::error('Error tak terduga: ' . $e->getMessage());
+            return redirect()->route('transfer')
+                ->with('error', 'Terjadi kesalahan internal pada server.');
         }
     }
 }

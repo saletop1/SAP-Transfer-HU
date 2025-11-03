@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -28,7 +27,7 @@ class LoginController extends Controller
 
         try {
             // 2. Panggil API Login di Flask
-            $flaskApiUrl = env('FLASK_SAP_API_URL', 'http://127.0.0.1:8080') . '/api/login';
+            $flaskApiUrl = env('FLASK_SAP_API_URL', 'http://192.168.90.27:5006') . '/api/login';
 
             $response = Http::timeout(30)->post($flaskApiUrl, [
                 'username' => $credentials['username'],
