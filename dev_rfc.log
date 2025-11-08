@@ -19,3 +19,87 @@ Global trace level        : 0
 
 2025-08-29 07:48:30.825780 [06764] >> Info entry
 	Did not find config file C:\Users\it01k\Downloads\transfer-update\sapnwrfc.ini.
+
+**** Log file opened at 2025-11-03 09:06:40.707137 UTC+07:00 (SE Asia Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 15
+Compilation date          : Nov  1 2024 23:51:57
+CPIC library              : 754.2024.07.29 version 3
+NI library                : 40
+Kernel Release            : 754 Patch Level 419
+Current working directory : D:\PROJECT1\laragon\www\SAP-Transfer-HU
+Program                   : python
+Process ID                : 11404
+User                      : Satria Agung P
+Hardware                  : PC with Windows NT 12x AMD64 Level 6 (Mod 154 Step 3)
+Binary Type               : 64bit
+Operating_system          : Windows NT 10.0
+Hostname                  : SATRIA
+IP address                : 192.168.90.192
+IPv6 address              : fe80::21d:fc87:7c6e:ffca
+Global trace level        : 0
+
+2025-11-03 09:06:40.700433 [01108] >> Info entry
+	throwRfcErrorMsg called at:
+	0x7FFF9A2096B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FFF9A2096B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FFF9A2096B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FFF9A2096B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FFF9A2096B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FFF9A2096B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FFF9A2096B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FFF9A2096B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FFF9A2096B0: sapnwrfc.dll!RfcSetAbapObjectByIndex(Error in SymSetContext(): 50)
+	0x7FFF9A1C59B0: sapnwrfc.dll!RfcOpenConnection(Error in SymSetContext(): 50)
+?????????	0x7FFF9E2B4E3C: python39.dll!PyType_GenericNew(Error in SymSetContext(): 50)
+	0x7FFF9E2C2CFC: python39.dll!PyObject_Call(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E286EE0: python39.dll!PyFunction_Vectorcall(Error in SymSetContext(): 50)
+	0x7FFF9E2C2F00: python39.dll!PyVectorcall_Call(Error in SymSetContext(): 50)
+	0x7FFF9E2C2CFC: python39.dll!PyObject_Call(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E286EE0: python39.dll!PyFunction_Vectorcall(Error in SymSetContext(): 50)
+	0x7FFF9E2C6810: python39.dll!PyObject_FastCallDictTstate(Error in SymSetContext(): 50)
+	0x7FFF9E2C6234: python39.dll!PyObject_Call_Prepend(Error in SymSetContext(): 50)
+	0x7FFF9E2C6100: python39.dll!PyEval_EvalCodeEx(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2D2530: python39.dll!PyDict_MergeFromSeq2(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E284B80: python39.dll!PyObject_GC_Del(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E284B80: python39.dll!PyObject_GC_Del(Error in SymSetContext(): 50)
+	0x7FFF9E2BA9D4: python39.dll!PyFloat_FromDouble(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2BA9D4: python39.dll!PyFloat_FromDouble(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2BA9D4: python39.dll!PyFloat_FromDouble(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E284B80: python39.dll!PyObject_GC_Del(Error in SymSetContext(): 50)
+	0x7FFF9E2BA9D4: python39.dll!PyFloat_FromDouble(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E286EE0: python39.dll!PyFunction_Vectorcall(Error in SymSetContext(): 50)
+	0x7FFF9E2B4E3C: python39.dll!PyType_GenericNew(Error in SymSetContext(): 50)
+	0x7FFF9E2B4E3C: python39.dll!PyType_GenericNew(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E286EE0: python39.dll!PyFunction_Vectorcall(Error in SymSetContext(): 50)
+	0x7FFF9E2BA9D4: python39.dll!PyFloat_FromDouble(Error in SymSetContext(): 50)
+	0x7FFF9E2C2F00: python39.dll!PyVectorcall_Call(Error in SymSetContext(): 50)
+	0x7FFF9E2C2CFC: python39.dll!PyObject_Call(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E2886B0: python39.dll!PyEval_EvalFrameDefault(Error in SymSetContext(): 50)
+	0x7FFF9E286EE0: python39.dll!PyFunction_Vectorcall(Error in SymSetContext(): 50)
+	0x7FFF9E2BA9D4: python39.dll!PyFloat_FromDouble(Error in SymSetContext(): 50)
+	0x7FFF9E2C2F00: python39.dll!PyVectorcall_Call(Error in SymSetContext(): 50)
+	0x7FFF9E2C2CFC: python39.dll!PyObject_Call(Error in SymSetContext(): 50)
+	0x7FFF9E2FBA08: python39.dll!PyThread_exit_thread(Error in SymSetContext(): 50)
+	0x7FFF9E2FBA08: python39.dll!PyThread_exit_thread(Error in SymSetContext(): 50)
+
+2025-11-03 09:06:40.807541 [01108] >> Error entry
+	[Handle: 2004600268832	ConvID: 98228690	Target: kmiprd	SysID: PRD	SysNr: 01	User: SATRIA	Client: 300	Language: E	Codepage: 4103]
+	RfcLogonException: Key: RFC_LOGON_FAILURE, Code: RFC_LOGON_FAILURE, Message: Name or password is incorrect (repeat logon)

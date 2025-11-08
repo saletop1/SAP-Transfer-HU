@@ -189,6 +189,8 @@
                     <div class="form-group">
                         <select id="destSloc" required>
                             <option value="" disabled selected>Pilih Sloc Tujuan</option>
+                            <option value="21HU">21HU_Pack HU FG</option>
+                            <option value="224H">224H_SG & Door HU</option>
                             <option value="3DH1">3DH1</option>
                             <option value="3DH2">3DH2</option>
                             <option value="3D10">3D10</option>
@@ -218,185 +220,232 @@
 
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script type="module">
-        // JavaScript Anda tetap sama persis, tidak perlu diubah.
-        import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
+    import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
 
-        window.sapCredentials = {
-            username: "{{ session('sap_username', '') }}",
-            password: "{{ session('sap_password', '') }}"
-        };
+    window.sapCredentials = {
+        username: "{{ session('sap_username', '') }}",
+        password: "{{ session('sap_password', '') }}"
+    };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            const LOGIN_URL = "{{ route('login') }}";
+    document.addEventListener('DOMContentLoaded', () => {
+        const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const LOGIN_URL = "{{ route('login') }}";
 
-            async function handleApiResponse(response) {
-                if (response.status === 401) {
-                    alert("Sesi Anda telah berakhir. Harap login kembali.");
-                    window.location.href = LOGIN_URL;
-                    return null;
-                }
-                return response.json();
+        async function handleApiResponse(response) {
+            if (response.status === 401) {
+                alert("Sesi Anda telah berakhir. Harap login kembali.");
+                window.location.href = LOGIN_URL;
+                return null;
             }
+            return response.json();
+        }
 
-            const huInput = document.getElementById('huNumber');
-            const destSlocInput = document.getElementById('destSloc');
-            const transferForm = document.getElementById('transferForm');
-            const huListEl = document.getElementById('huList');
-            const huCounterEl = document.getElementById('huCounter');
-            const messageEl = document.getElementById('message');
-            const loaderOverlay = document.getElementById('loaderOverlay');
-            const startScanBtn = document.getElementById('startScanBtn');
-            const qrReaderEl = document.getElementById('qr-reader');
-            let html5QrCode;
-            let dotLottie;
+        const huInput = document.getElementById('huNumber');
+        const destSlocInput = document.getElementById('destSloc');
+        const transferForm = document.getElementById('transferForm');
+        const huListEl = document.getElementById('huList');
+        const huCounterEl = document.getElementById('huCounter');
+        const messageEl = document.getElementById('message');
+        const loaderOverlay = document.getElementById('loaderOverlay');
+        const startScanBtn = document.getElementById('startScanBtn');
+        const qrReaderEl = document.getElementById('qr-reader');
+        let html5QrCode;
+        let dotLottie = null;
 
-            let scannedHUs = [];
+        let scannedHUs = [];
 
-            function renderHuList() {
-                huListEl.innerHTML = '';
-                scannedHUs.forEach(hu => {
-                    const li = document.createElement('li');
-                    li.dataset.hu = hu;
-                    li.textContent = hu;
-
-                    const removeBtn = document.createElement('button');
-                    removeBtn.innerHTML = '&times;';
-                    removeBtn.className = 'remove-btn';
-                    removeBtn.title = `Hapus HU ${hu}`;
-                    removeBtn.onclick = () => removeHu(hu);
-
-                    li.appendChild(removeBtn);
-                    huListEl.appendChild(li);
-                });
-                huCounterEl.textContent = scannedHUs.length;
-            }
-
-            function addHu(hu) {
-                const huNumber = hu.trim();
-                if (!huNumber) return;
-
-                if (scannedHUs.includes(huNumber)) {
-                    const existingLi = huListEl.querySelector(`li[data-hu="${huNumber}"]`);
-                    if (existingLi) {
-                        existingLi.classList.add('hu-duplicate');
-                        setTimeout(() => existingLi.classList.remove('hu-duplicate'), 1000);
-                    }
-                    if (qrReaderEl.style.display === 'block') {
-                        qrReaderEl.classList.add('scanner-error');
-                        setTimeout(() => qrReaderEl.classList.remove('scanner-error'), 1000);
-                    }
-                } else {
-                    scannedHUs.push(huNumber);
-                    renderHuList();
-                    const newLi = huListEl.querySelector(`li[data-hu="${huNumber}"]`);
-                    if (newLi) {
-                        newLi.classList.add('hu-success');
-                        setTimeout(() => newLi.classList.remove('hu-success'), 1500);
-                    }
-                }
-                huInput.value = '';
-            }
-
-            function removeHu(huToRemove) {
-                scannedHUs = scannedHUs.filter(hu => hu !== huToRemove);
-                renderHuList();
-            }
-
-            startScanBtn.addEventListener('click', () => {
-                const isScannerVisible = qrReaderEl.style.display === 'block';
-                if (isScannerVisible) {
-                    if (html5QrCode && html5QrCode.isScanning) {
-                        html5QrCode.stop().then(() => {
-                            qrReaderEl.style.display = 'none';
-                            startScanBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>`;
-                        }).catch(err => console.error("Gagal stop scanner.", err));
-                    }
-                } else {
-                    qrReaderEl.style.display = 'block';
-                    startScanBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`; // Tombol Stop
-                    html5QrCode = new Html5Qrcode("qr-reader");
-
-                    // ## PERBAIKAN: Logika yang lebih andal untuk memulai kamera ##
-                    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-                    html5QrCode.start({ facingMode: "environment" }, config, addHu)
-                        .catch(err => {
-                            console.error("Gagal memulai kamera utama:", err);
-                            // Jika kamera belakang gagal, coba kamera apa pun yang tersedia
-                            html5QrCode.start({ }, config, addHu)
-                                .catch(err2 => {
-                                    messageEl.textContent = `Error Kamera: ${err2}. Pastikan izin kamera sudah diberikan.`;
-                                    messageEl.className = 'error';
-                                    qrReaderEl.style.display = 'none';
-                                    startScanBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>`;
-                                });
-                        });
-                }
-            });
-
-            transferForm.addEventListener('submit', async function(event){
-                event.preventDefault();
-                if (scannedHUs.length === 0) {
-                    messageEl.textContent = 'Error: Belum ada Nomor HU yang di-scan.';
-                    messageEl.className = 'error';
-                    return;
-                }
-
-                messageEl.style.display = 'none';
-                loaderOverlay.style.display = 'flex';
-
-                if (!dotLottie) {
-                    dotLottie = new DotLottie({ canvas: document.getElementById("dotlottie-canvas"), src: "https://lottie.host/79b7d6c7-1218-429d-9ff3-4ebf563e1c95/FCoH1GLOQc.lottie", loop: true, autoplay: true });
-                } else {
-                    dotLottie.play();
-                }
-
-                const data = {
-                    hus: scannedHUs,
-                    destSloc: destSlocInput.value,
-                };
-
+        // Fungsi untuk memuat animasi DotLottie dari file lokal
+        function loadDotLottieAnimation() {
+            if (!dotLottie) {
                 try {
-                    const response = await fetch('http://127.0.0.1:8080/api/transfer', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-SAP-Username': window.sapCredentials.username,
-                            'X-SAP-Password': window.sapCredentials.password
-                        },
-                        body: JSON.stringify(data)
+                    dotLottie = new DotLottie({
+                        canvas: document.getElementById("dotlottie-canvas"),
+                        src: "{{ asset('animation/Delivery.lottie') }}", // Menggunakan file lokal
+                        loop: true,
+                        autoplay: true
                     });
-
-                    const result = await handleApiResponse(response);
-                    if (!result) return;
-
-                    if(response.ok) {
-                        messageEl.textContent = `Sukses: ${result.message}`;
-                        messageEl.className = 'success';
-                        scannedHUs = [];
-                        renderHuList();
-                        destSlocInput.selectedIndex = 0;
-                    } else {
-                        let errorMessage = `Error: ${result.message}`;
-                        if (result.details && result.details.failed_hus && result.details.failed_hus.length > 0) {
-                            const failedItems = result.details.failed_hus.map(item => `\n- HU ${item.hu}: ${item.reason}`).join('');
-                            errorMessage += `\nDetail Kegagalan:${failedItems}`;
-                        }
-                        messageEl.textContent = errorMessage;
-                        messageEl.style.whiteSpace = 'pre-wrap';
-                        messageEl.className = 'error';
+                    console.log("DotLottie animation loaded successfully from local file");
+                } catch (error) {
+                    console.error("Error loading DotLottie animation:", error);
+                    // Fallback ke URL online jika file lokal tidak berhasil
+                    try {
+                        dotLottie = new DotLottie({
+                            canvas: document.getElementById("dotlottie-canvas"),
+                            src: "https://lottie.host/79b7d6c7-1218-429d-9ff3-4ebf563e1c95/FCoH1GLOQc.lottie",
+                            loop: true,
+                            autoplay: true
+                        });
+                        console.log("Fallback: Using online animation");
+                    } catch (fallbackError) {
+                        console.error("Fallback animation also failed:", fallbackError);
                     }
-                } catch(error) {
-                    messageEl.textContent = 'Error: Gagal terhubung ke server Flask. Pastikan API berjalan.';
-                    messageEl.className = 'error';
-                } finally {
-                    messageEl.style.display = 'block';
-                    loaderOverlay.style.display = 'none';
-                    if (dotLottie) dotLottie.stop();
                 }
+            }
+            return dotLottie;
+        }
+
+        // Fungsi untuk menampilkan animasi
+        function showAnimation() {
+            loaderOverlay.style.display = 'flex';
+            const animation = loadDotLottieAnimation();
+            if (animation) {
+                animation.play();
+            }
+        }
+
+        // Fungsi untuk menyembunyikan animasi
+        function hideAnimation() {
+            loaderOverlay.style.display = 'none';
+            if (dotLottie) {
+                dotLottie.stop();
+            }
+        }
+
+        function renderHuList() {
+            huListEl.innerHTML = '';
+            scannedHUs.forEach(hu => {
+                const li = document.createElement('li');
+                li.dataset.hu = hu;
+                li.textContent = hu;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.innerHTML = '&times;';
+                removeBtn.className = 'remove-btn';
+                removeBtn.title = `Hapus HU ${hu}`;
+                removeBtn.onclick = () => removeHu(hu);
+
+                li.appendChild(removeBtn);
+                huListEl.appendChild(li);
             });
+            huCounterEl.textContent = scannedHUs.length;
+        }
+
+        function addHu(hu) {
+            const huNumber = hu.trim();
+            if (!huNumber) return;
+
+            if (scannedHUs.includes(huNumber)) {
+                const existingLi = huListEl.querySelector(`li[data-hu="${huNumber}"]`);
+                if (existingLi) {
+                    existingLi.classList.add('hu-duplicate');
+                    setTimeout(() => existingLi.classList.remove('hu-duplicate'), 1000);
+                }
+                if (qrReaderEl.style.display === 'block') {
+                    qrReaderEl.classList.add('scanner-error');
+                    setTimeout(() => qrReaderEl.classList.remove('scanner-error'), 1000);
+                }
+            } else {
+                scannedHUs.push(huNumber);
+                renderHuList();
+                const newLi = huListEl.querySelector(`li[data-hu="${huNumber}"]`);
+                if (newLi) {
+                    newLi.classList.add('hu-success');
+                    setTimeout(() => newLi.classList.remove('hu-success'), 1500);
+                }
+            }
+            huInput.value = '';
+        }
+
+        function removeHu(huToRemove) {
+            scannedHUs = scannedHUs.filter(hu => hu !== huToRemove);
+            renderHuList();
+        }
+
+        startScanBtn.addEventListener('click', () => {
+            const isScannerVisible = qrReaderEl.style.display === 'block';
+            if (isScannerVisible) {
+                if (html5QrCode && html5QrCode.isScanning) {
+                    html5QrCode.stop().then(() => {
+                        qrReaderEl.style.display = 'none';
+                        startScanBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>`;
+                    }).catch(err => console.error("Gagal stop scanner.", err));
+                }
+            } else {
+                qrReaderEl.style.display = 'block';
+                startScanBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+                html5QrCode = new Html5Qrcode("qr-reader");
+
+                const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+                html5QrCode.start({ facingMode: "environment" }, config, addHu)
+                    .catch(err => {
+                        console.error("Gagal memulai kamera utama:", err);
+                        html5QrCode.start({ }, config, addHu)
+                            .catch(err2 => {
+                                messageEl.textContent = `Error Kamera: ${err2}. Pastikan izin kamera sudah diberikan.`;
+                                messageEl.className = 'error';
+                                qrReaderEl.style.display = 'none';
+                                startScanBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>`;
+                            });
+                    });
+            }
         });
-    </script>
+
+        transferForm.addEventListener('submit', async function(event){
+            event.preventDefault();
+            if (scannedHUs.length === 0) {
+                messageEl.textContent = 'Error: Belum ada Nomor HU yang di-scan.';
+                messageEl.className = 'error';
+                messageEl.style.display = 'block';
+                return;
+            }
+
+            messageEl.style.display = 'none';
+
+            // Tampilkan animasi
+            showAnimation();
+
+            const data = {
+                hus: scannedHUs,
+                destSloc: destSlocInput.value,
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:8080/api/transfer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-SAP-Username': window.sapCredentials.username,
+                        'X-SAP-Password': window.sapCredentials.password
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await handleApiResponse(response);
+                if (!result) return;
+
+                if(response.ok) {
+                    messageEl.textContent = `Sukses: ${result.message}`;
+                    messageEl.className = 'success';
+                    scannedHUs = [];
+                    renderHuList();
+                    destSlocInput.selectedIndex = 0;
+                } else {
+                    let errorMessage = `Error: ${result.message}`;
+                    if (result.details && result.details.failed_hus && result.details.failed_hus.length > 0) {
+                        const failedItems = result.details.failed_hus.map(item => `\n- HU ${item.hu}: ${item.reason}`).join('');
+                        errorMessage += `\nDetail Kegagalan:${failedItems}`;
+                    }
+                    messageEl.textContent = errorMessage;
+                    messageEl.style.whiteSpace = 'pre-wrap';
+                    messageEl.className = 'error';
+                }
+            } catch(error) {
+                console.error('Fetch error:', error);
+                messageEl.textContent = 'Error: Gagal terhubung ke server Flask. Pastikan API berjalan.';
+                messageEl.className = 'error';
+            } finally {
+                messageEl.style.display = 'block';
+                // Sembunyikan animasi
+                hideAnimation();
+            }
+        });
+
+        // Preload animasi saat halaman dimuat
+        setTimeout(() => {
+            loadDotLottieAnimation();
+        }, 1000);
+    });
+</script>
 </body>
 </html>
